@@ -6,11 +6,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 import './Live.scss';
 import { Link } from 'react-router-dom';
+import NumberFormat from 'react-number-format';
 
 class Total extends Component {
   state = {
     all: [],
-    loading: false
+    loading: false,
   };
 
   getAll = async () => {
@@ -21,8 +22,20 @@ class Total extends Component {
     this.setState({ all: res.data, loading: false });
   };
 
+  componentWillMount() {
+    localStorage.getItem('countries') &&
+      this.setState({
+        countries: JSON.parse(localStorage.getItem('countries')),
+        loading: false,
+      });
+  }
+
   async componentDidMount() {
     this.getAll();
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    localStorage.setItem('all', JSON.stringify(nextState.countries));
   }
 
   render() {
@@ -39,7 +52,7 @@ class Total extends Component {
                 style={{
                   marginLeft: '-40px',
                   marginTop: '-8px',
-                  backgroundColor: 'F00000'
+                  backgroundColor: 'F00000',
                 }}
               >
                 <div></div>
@@ -59,7 +72,14 @@ class Total extends Component {
             <Col xs='6'>
               <Card style={{ height: '40px', marginTop: '10px' }}>
                 <CardBody>
-                  <h5 style={{ marginTop: '-15px' }}>{this.props.all.cases}</h5>
+                  <h5 style={{ marginTop: '-15px' }}>
+                    <NumberFormat
+                      value={this.state.all.cases}
+                      displayType={'text'}
+                      thousandSeparator={true}
+                      renderText={(value) => <div>{value}</div>}
+                    />
+                  </h5>
                 </CardBody>
                 <Button
                   disabled
@@ -76,7 +96,12 @@ class Total extends Component {
               <Card style={{ height: '40px', marginTop: '10px' }}>
                 <CardBody>
                   <h5 style={{ marginTop: '-15px' }}>
-                    {this.props.all.deaths}
+                    <NumberFormat
+                      value={this.state.all.deaths}
+                      displayType={'text'}
+                      thousandSeparator={true}
+                      renderText={(value) => <div>{value}</div>}
+                    />
                   </h5>
                 </CardBody>
                 <Button
@@ -96,7 +121,12 @@ class Total extends Component {
               <Card style={{ height: '40px', marginTop: '50px' }}>
                 <CardBody>
                   <h5 style={{ marginTop: '-15px' }}>
-                    {this.props.all.recovered}
+                    <NumberFormat
+                      value={this.state.all.recovered}
+                      displayType={'text'}
+                      thousandSeparator={true}
+                      renderText={(value) => <div>{value}</div>}
+                    />
                   </h5>
                 </CardBody>
                 <Button
@@ -114,7 +144,12 @@ class Total extends Component {
               <Card style={{ height: '40px', marginTop: '50px' }}>
                 <CardBody>
                   <h5 style={{ marginTop: '-15px' }}>
-                    {this.props.all.active}
+                    <NumberFormat
+                      value={this.state.all.active}
+                      displayType={'text'}
+                      thousandSeparator={true}
+                      renderText={(value) => <div>{value}</div>}
+                    />
                   </h5>
                 </CardBody>
                 <Button
@@ -141,10 +176,10 @@ class Total extends Component {
                   ['', ''],
                   ['Deaths', this.state.all.deaths],
                   ['Active', this.state.all.active],
-                  ['Recovered', this.state.all.recovered]
+                  ['Recovered', this.state.all.recovered],
                 ]}
                 options={{
-                  title: 'Overview in Percentage'
+                  title: 'Overview in Percentage',
                 }}
               />
             </Col>
@@ -160,7 +195,7 @@ class Total extends Component {
                   onClick={() => {
                     let win = window.open('');
                     win.location.replace(
-                      'https://github.com/shahibuzzaman/react-covid19-tracker/tree/master'
+                      'https://github.com/shahibuzzaman/covid19-tracker-reactJS'
                     );
                   }}
                 >

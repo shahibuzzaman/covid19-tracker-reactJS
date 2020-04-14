@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Country from './responsive/Country';
+import Country from './Country';
 import {
   InputGroup,
   InputGroupText,

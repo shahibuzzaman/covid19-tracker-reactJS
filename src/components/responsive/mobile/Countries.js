@@ -5,24 +5,24 @@ import {
   InputGroupText,
   InputGroupAddon,
   Input,
-  Navbar
+  Navbar,
 } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 class Countries extends Component {
   state = {
-    search: ''
+    search: '',
   };
 
-  onChange = e => {
+  onChange = (e) => {
     this.setState({ search: e.target.value });
   };
 
   render() {
     const search = this.state;
 
-    const filteredCountries = this.props.countries.filter(countries => {
+    const filteredCountries = this.props.countries.filter((countries) => {
       return (
         countries.country
           .toLowerCase()
@@ -31,12 +31,14 @@ class Countries extends Component {
     });
 
     return (
-      <div style={{ marginTop: '70px' }}>
-        <Navbar
-          className='fixed-top'
-          light
-          expand='md'
-          style={{ width: '75%', marginTop: '30px' }}
+      <div className='text-center' style={{ marginTop: '-50px' }}>
+        <h6>** Use Search box to get single country data</h6>
+        <div
+          style={{
+            width: '70%',
+            marginBottom: '20px',
+            marginLeft: '15%',
+          }}
         >
           <InputGroup size='sm'>
             <InputGroupAddon addonType='prepend'>
@@ -54,10 +56,10 @@ class Countries extends Component {
               onChange={this.onChange}
             />
           </InputGroup>
-        </Navbar>
+        </div>
 
         <div style={userStyle}>
-          {filteredCountries.map(countries => (
+          {filteredCountries.map((countries) => (
             <Country key={countries.id} countries={countries} />
           ))}
         </div>
@@ -70,7 +72,7 @@ const userStyle = {
   display: 'grid',
   gridTemplateColumns: 'repeat(1, 1fr)',
   gridGap: '1rem',
-  paddingBottom: '50px'
+  paddingBottom: '80px',
 };
 
 export default Countries;

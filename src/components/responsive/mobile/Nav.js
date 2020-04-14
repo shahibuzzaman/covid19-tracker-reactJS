@@ -6,12 +6,12 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink
+  NavLink,
 } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLungsVirus } from '@fortawesome/free-solid-svg-icons';
 
-const Example = props => {
+const Example = (props) => {
   const [collapsed, setCollapsed] = useState(true);
 
   const toggleNavbar = () => setCollapsed(!collapsed);
@@ -24,7 +24,7 @@ const Example = props => {
         className='fixed-top'
         style={{ padding: '20px' }}
       >
-        <NavbarBrand style={{ marginTop: '-35px', marginLeft: '8px' }} href='/'>
+        <NavbarBrand style={{ marginLeft: '8px', fontSize: '25px' }} href='/'>
           <FontAwesomeIcon icon={faLungsVirus} style={{ color: 'red' }} />{' '}
           COVID-19 Tracker
         </NavbarBrand>

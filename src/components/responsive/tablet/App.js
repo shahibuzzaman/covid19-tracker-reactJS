@@ -15,7 +15,7 @@ class App extends Component {
     countries: [],
     country: [],
     all: {},
-    loading: false
+    loading: false,
   };
 
   getCountries = async () => {
@@ -23,21 +23,15 @@ class App extends Component {
 
     const res = await axios.get('https://corona.lmao.ninja/countries');
 
-    this.setState({ countries: res.data, loading: false });
-  };
-
-  // get all total
-  getAll = async () => {
-    this.setState({ loading: true });
-
-    const res = await axios.get('https://corona.lmao.ninja/all');
-
-    this.setState({ all: res.data, loading: false });
+    this.setState({
+      countries: res.data.sort((a, b) => b.cases - a.cases),
+      loading: false,
+    });
   };
 
   //get single country data
 
-  getCountryData = async country => {
+  getCountryData = async (country) => {
     this.setState({ loading: true });
 
     const res = await axios.get(
@@ -47,10 +41,22 @@ class App extends Component {
     this.setState({ country: res.data, loading: false });
   };
 
+  componentWillMount() {
+    localStorage.getItem('countries') &&
+      this.setState({
+        countries: JSON.parse(localStorage.getItem('countries')),
+        loading: false,
+      });
+  }
+
   async componentDidMount() {
     this.getCountries();
-    this.getAll();
     this.getCountryData();
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    localStorage.setItem('countries', JSON.stringify(nextState.countries));
+    localStorage.setItem('country', JSON.stringify(nextState.country));
   }
 
   render() {
@@ -62,15 +68,12 @@ class App extends Component {
             <Route
               exact
               path='/'
-              render={props => (
+              render={(props) => (
                 <Fragment>
                   <Container fluid={true}>
                     <Row>
                       <Col xs='6'>
-                        <Total
-                          loading={this.state.loading}
-                          all={this.state.all}
-                        />
+                        <Total />
                       </Col>
                       <Col xs='6'>
                         <Container responsive='true'>
@@ -93,7 +96,7 @@ class App extends Component {
             <Route
               exact
               path='/country/:country'
-              render={props => (
+              render={(props) => (
                 <CountryData
                   {...props}
                   getCountryData={this.getCountryData}

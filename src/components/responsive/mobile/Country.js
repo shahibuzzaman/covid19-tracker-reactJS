@@ -7,10 +7,11 @@ import {
   CardHeader,
   Button,
   CardSubtitle,
-  Container
+  Container,
 } from 'reactstrap';
 
 import { Link } from 'react-router-dom';
+import NumberFormat from 'react-number-format';
 
 class Country extends Component {
   render() {
@@ -35,35 +36,72 @@ class Country extends Component {
                   <CardSubtitle>
                     {' '}
                     <strong> Cases : </strong>
-                    {this.props.countries.cases}{' '}
+                    <NumberFormat
+                      value={this.props.countries.cases}
+                      displayType={'text'}
+                      thousandSeparator={true}
+                      renderText={(value) => <span>{value}</span>}
+                    />
                   </CardSubtitle>
                   <CardSubtitle>
                     {' '}
                     <strong>Deaths : </strong>
-                    {this.props.countries.deaths}{' '}
+                    <NumberFormat
+                      value={this.props.countries.deaths}
+                      displayType={'text'}
+                      thousandSeparator={true}
+                      renderText={(value) => <span>{value}</span>}
+                    />
                   </CardSubtitle>
                   <CardSubtitle>
                     <strong>Recovered :</strong>{' '}
-                    {this.props.countries.recovered}{' '}
+                    <NumberFormat
+                      value={this.props.countries.recovered}
+                      displayType={'text'}
+                      thousandSeparator={true}
+                      renderText={(value) => <span>{value}</span>}
+                    />{' '}
                   </CardSubtitle>
                   <CardSubtitle>
-                    <strong>Critical :</strong> {this.props.countries.critical}{' '}
+                    <strong>Critical :</strong>{' '}
+                    <NumberFormat
+                      value={this.props.countries.critical}
+                      displayType={'text'}
+                      thousandSeparator={true}
+                      renderText={(value) => <span>{value}</span>}
+                    />{' '}
                   </CardSubtitle>
                   <CardSubtitle>
-                    <strong>Active :</strong> {this.props.countries.active}{' '}
+                    <strong>Active :</strong>{' '}
+                    <NumberFormat
+                      value={this.props.countries.active}
+                      displayType={'text'}
+                      thousandSeparator={true}
+                      renderText={(value) => <span>{value}</span>}
+                    />{' '}
                   </CardSubtitle>
                   <hr />
                   <CardSubtitle>
                     <strong>Cases Today :</strong>{' '}
-                    {this.props.countries.todayCases}{' '}
+                    <NumberFormat
+                      value={this.props.countries.todayCases}
+                      displayType={'text'}
+                      thousandSeparator={true}
+                      renderText={(value) => <span>{value}</span>}
+                    />{' '}
                   </CardSubtitle>
                   <CardSubtitle>
                     <strong>Deaths Today:</strong>{' '}
-                    {this.props.countries.todayDeaths}{' '}
+                    <NumberFormat
+                      value={this.props.countries.todayDeaths}
+                      displayType={'text'}
+                      thousandSeparator={true}
+                      renderText={(value) => <span>{value}</span>}
+                    />{' '}
                   </CardSubtitle>
                 </CardBody>
                 <Link to={`/country/${this.props.countries.country}`}>
-                  <Button style={{ width: '100%' }}>More </Button>
+                  <Button style={{ width: '100%' }}>More Info </Button>
                 </Link>
               </Card>
             </Card>

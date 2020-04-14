@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Row, Card, CardBody, CardDeck } from 'reactstrap';
 import Chart from 'react-google-charts';
+import NumberFormat from 'react-number-format';
 
 export class CountryData extends Component {
   componentDidMount() {
@@ -31,29 +32,59 @@ export class CountryData extends Component {
                       ['', ''],
                       ['Deaths', this.props.country.deaths],
                       ['Active', this.props.country.active],
-                      ['Recovered', this.props.country.recovered]
+                      ['Recovered', this.props.country.recovered],
                     ]}
                     options={{
-                      title: 'Pandemic in Percentage'
+                      title: 'Pandemic in Percentage',
                     }}
                   />
                 </div>
 
                 <div style={{ color: 'black', textAlign: 'center' }}>
-                  <h2>{this.props.country.critical} </h2>{' '}
+                  <h2>
+                    {' '}
+                    <NumberFormat
+                      value={this.props.country.critical}
+                      displayType={'text'}
+                      thousandSeparator={true}
+                      renderText={(value) => <span>{value}</span>}
+                    />
+                    {}{' '}
+                  </h2>{' '}
                   <h3>Critical Cases treated in ICU</h3>
                 </div>
                 <CardDeck style={{ marginTop: '20px' }}>
                   <Card body inverse color='info' className='text-center'>
-                    <h3>{this.props.country.cases}</h3>
+                    <h3>
+                      <NumberFormat
+                        value={this.props.country.cases}
+                        displayType={'text'}
+                        thousandSeparator={true}
+                        renderText={(value) => <span>{value}</span>}
+                      />
+                    </h3>
                     <h4>Confirmed</h4>
                   </Card>
                   <Card body inverse color='danger' className='text-center'>
-                    <h3>{this.props.country.deaths}</h3>
+                    <h3>
+                      <NumberFormat
+                        value={this.props.country.deaths}
+                        displayType={'text'}
+                        thousandSeparator={true}
+                        renderText={(value) => <span>{value}</span>}
+                      />
+                    </h3>
                     <h4>Deaths</h4>
                   </Card>
                   <Card body inverse color='success' className='text-center'>
-                    <h3>{this.props.country.recovered}</h3>
+                    <h3>
+                      <NumberFormat
+                        value={this.props.country.recovered}
+                        displayType={'text'}
+                        thousandSeparator={true}
+                        renderText={(value) => <span>{value}</span>}
+                      />
+                    </h3>
                     <h4>Recovered</h4>
                   </Card>
                 </CardDeck>

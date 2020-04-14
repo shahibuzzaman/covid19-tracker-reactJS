@@ -12,7 +12,7 @@ import './Live.scss';
 class Total extends Component {
   state = {
     all: [],
-    loading: false
+    loading: false,
   };
 
   getAll = async () => {
@@ -23,8 +23,20 @@ class Total extends Component {
     this.setState({ all: res.data, loading: false });
   };
 
+  componentWillMount() {
+    localStorage.getItem('countries') &&
+      this.setState({
+        countries: JSON.parse(localStorage.getItem('countries')),
+        loading: false,
+      });
+  }
+
   async componentDidMount() {
     this.getAll();
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    localStorage.setItem('all', JSON.stringify(nextState.countries));
   }
 
   render() {
@@ -41,7 +53,7 @@ class Total extends Component {
                 style={{
                   marginLeft: '-40px',
                   marginTop: '-8px',
-                  backgroundColor: 'F00000'
+                  backgroundColor: 'F00000',
                 }}
               >
                 <div></div>
@@ -61,7 +73,7 @@ class Total extends Component {
             <Col xs='6'>
               <Card style={{ height: '40px', marginTop: '10px' }}>
                 <CardBody>
-                  <h5 style={{ marginTop: '-15px' }}>{this.props.all.cases}</h5>
+                  <h5 style={{ marginTop: '-15px' }}>{this.state.all.cases}</h5>
                 </CardBody>
                 <Button
                   disabled
@@ -78,7 +90,7 @@ class Total extends Component {
               <Card style={{ height: '40px', marginTop: '10px' }}>
                 <CardBody>
                   <h5 style={{ marginTop: '-15px' }}>
-                    {this.props.all.deaths}
+                    {this.state.all.deaths}
                   </h5>
                 </CardBody>
                 <Button
@@ -98,7 +110,7 @@ class Total extends Component {
               <Card style={{ height: '40px', marginTop: '50px' }}>
                 <CardBody>
                   <h5 style={{ marginTop: '-15px' }}>
-                    {this.props.all.recovered}
+                    {this.state.all.recovered}
                   </h5>
                 </CardBody>
                 <Button
@@ -116,7 +128,7 @@ class Total extends Component {
               <Card style={{ height: '40px', marginTop: '50px' }}>
                 <CardBody>
                   <h5 style={{ marginTop: '-15px' }}>
-                    {this.props.all.active}
+                    {this.state.all.active}
                   </h5>
                 </CardBody>
                 <Button
@@ -143,10 +155,10 @@ class Total extends Component {
                   ['', ''],
                   ['Deaths', this.state.all.deaths],
                   ['Active', this.state.all.active],
-                  ['Recovered', this.state.all.recovered]
+                  ['Recovered', this.state.all.recovered],
                 ]}
                 options={{
-                  title: 'Overview in Percentage'
+                  title: 'Overview in Percentage',
                 }}
               />
             </Col>
@@ -155,7 +167,17 @@ class Total extends Component {
             <Col>
               <div>
                 <hr></hr>
-                <Button outline color='info' size='sm'>
+                <Button
+                  outline
+                  color='info'
+                  size='sm'
+                  onClick={() => {
+                    let win = window.open('');
+                    win.location.replace(
+                      'https://github.com/shahibuzzaman/covid19-tracker-reactJS'
+                    );
+                  }}
+                >
                   Fork on Github
                 </Button>
               </div>

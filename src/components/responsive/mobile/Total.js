@@ -6,18 +6,19 @@ import {
   Row,
   Col,
   Button,
-  Navbar
+  Navbar,
 } from 'reactstrap';
 import Chart from 'react-google-charts';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 import './Live.scss';
+import NumberFormat from 'react-number-format';
 
 class Total extends Component {
   state = {
     all: [],
-    loading: false
+    loading: false,
   };
 
   getAll = async () => {
@@ -28,8 +29,19 @@ class Total extends Component {
     this.setState({ all: res.data, loading: false });
   };
 
+  componentWillMount() {
+    localStorage.getItem('countries') &&
+      this.setState({
+        countries: JSON.parse(localStorage.getItem('countries')),
+        loading: false,
+      });
+  }
+
   async componentDidMount() {
     this.getAll();
+  }
+  componentWillUpdate(nextProps, nextState) {
+    localStorage.setItem('all', JSON.stringify(nextState.countries));
   }
 
   render() {
@@ -43,7 +55,7 @@ class Total extends Component {
                 style={{
                   marginLeft: '-40px',
                   marginTop: '-8px',
-                  backgroundColor: 'F00000'
+                  backgroundColor: 'F00000',
                 }}
               >
                 <div></div>
@@ -63,7 +75,14 @@ class Total extends Component {
             <Col xs='6'>
               <Card style={{ height: '40px', marginTop: '10px' }}>
                 <CardBody>
-                  <h5 style={{ marginTop: '-15px' }}>{this.props.all.cases}</h5>
+                  <h5 style={{ marginTop: '-15px' }}>
+                    <NumberFormat
+                      value={this.state.all.cases}
+                      displayType={'text'}
+                      thousandSeparator={true}
+                      renderText={(value) => <div>{value}</div>}
+                    />
+                  </h5>
                 </CardBody>
                 <Button
                   disabled
@@ -80,7 +99,12 @@ class Total extends Component {
               <Card style={{ height: '40px', marginTop: '10px' }}>
                 <CardBody>
                   <h5 style={{ marginTop: '-15px' }}>
-                    {this.props.all.deaths}
+                    <NumberFormat
+                      value={this.state.all.deaths}
+                      displayType={'text'}
+                      thousandSeparator={true}
+                      renderText={(value) => <div>{value}</div>}
+                    />
                   </h5>
                 </CardBody>
                 <Button
@@ -100,7 +124,12 @@ class Total extends Component {
               <Card style={{ height: '40px', marginTop: '50px' }}>
                 <CardBody>
                   <h5 style={{ marginTop: '-15px' }}>
-                    {this.props.all.recovered}
+                    <NumberFormat
+                      value={this.state.all.active}
+                      displayType={'text'}
+                      thousandSeparator={true}
+                      renderText={(value) => <div>{value}</div>}
+                    />
                   </h5>
                 </CardBody>
                 <Button
@@ -118,7 +147,12 @@ class Total extends Component {
               <Card style={{ height: '40px', marginTop: '50px' }}>
                 <CardBody>
                   <h5 style={{ marginTop: '-15px' }}>
-                    {this.props.all.active}
+                    <NumberFormat
+                      value={this.state.all.active}
+                      displayType={'text'}
+                      thousandSeparator={true}
+                      renderText={(value) => <div>{value}</div>}
+                    />
                   </h5>
                 </CardBody>
                 <Button
@@ -133,24 +167,43 @@ class Total extends Component {
             </Col>
           </Row>
           <Row>
-            <Col style={{ height: '300px' }}>
-              <Chart
-                width={'330px'}
-                height={'300px'}
-                style={{ marginTop: '45px' }}
-                chartType='PieChart'
-                loader={<div style={{ marginTop: '60px' }}>Loading Chart</div>}
-                data={[
-                  ['Task', 'Hours per Day'],
-                  ['', ''],
-                  ['Deaths', this.state.all.deaths],
-                  ['Active', this.state.all.active],
-                  ['Recovered', this.state.all.recovered]
-                ]}
-                options={{
-                  title: 'Pandemic in Percentage'
+            <Col>
+              <div
+                style={{
+                  marginTop: '60px',
+                  height: '400px',
+                  maxWidth: '300px',
+                  width: '350px',
                 }}
-              />
+              >
+                <p>Tap to see the percentage</p>
+                <Chart
+                  width={'370px'}
+                  height={'300px'}
+                  style={{}}
+                  chartType='PieChart'
+                  loader={
+                    <div style={{ marginTop: '60px' }}>Loading Chart</div>
+                  }
+                  data={[
+                    ['Task', 'Hours per Day'],
+                    ['', ''],
+                    ['Deaths', this.state.all.deaths],
+                    ['Active', this.state.all.active],
+                    ['Recovered', this.state.all.recovered],
+                  ]}
+                  options={{
+                    chartArea: {
+                      left: 10,
+                      right: 0,
+                      top: 10,
+                      bottom: 20,
+                      width: '100%',
+                      height: '100%',
+                    },
+                  }}
+                />
+              </div>
             </Col>
           </Row>
           <Row>
@@ -164,7 +217,17 @@ class Total extends Component {
                 style={{ width: '100%' }}
               >
                 <hr></hr>
-                <Button outline color='info' size='sm'>
+                <Button
+                  outline
+                  color='info'
+                  size='sm'
+                  onClick={() => {
+                    let win = window.open('');
+                    win.location.replace(
+                      'https://github.com/shahibuzzaman/covid19-tracker-reactJS'
+                    );
+                  }}
+                >
                   Fork on Github
                 </Button>
               </Navbar>
