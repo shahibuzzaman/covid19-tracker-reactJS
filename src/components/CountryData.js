@@ -6,7 +6,7 @@ import {
   Card,
   CardBody,
   Button,
-  CardDeck
+  CardDeck,
 } from 'reactstrap';
 import Chart from 'react-google-charts';
 
@@ -51,10 +51,10 @@ export class CountryData extends Component {
                           ['', ''],
                           ['Deaths', this.props.country.deaths],
                           ['Active', this.props.country.active],
-                          ['Recovered', this.props.country.recovered]
+                          ['Recovered', this.props.country.recovered],
                         ]}
                         options={{
-                          title: 'Overview in Percentage'
+                          title: 'Overview in Percentage',
                         }}
                       />
                     </div>
@@ -63,9 +63,15 @@ export class CountryData extends Component {
               </Card>
             </Col>
             <Col xs='4'>
-              <Card inverse body outline color='primary'>
+              <Card style={{}} inverse body outline color='primary'>
                 <CardBody>
-                  <div style={{ color: 'black', textAlign: 'center' }}>
+                  <div
+                    style={{
+                      color: 'black',
+                      textAlign: 'center',
+                      marginTop: '-20px',
+                    }}
+                  >
                     <h2>{this.props.country.critical} </h2>{' '}
                     <h3>Critical Cases treated in ICU</h3>
                     <hr></hr>

@@ -6,8 +6,8 @@ class SafetyTips extends Component {
   render() {
     return (
       <div
-        className=' position-fixed text-center'
-        style={{ marginTop: '70px', marginLeft: '-15px', width: '23%' }}
+        className='position-fixed text-center '
+        style={{ marginTop: '10px', marginLeft: '', width: '20%' }}
       >
         <Card>
           <Button

@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { Card, CardBody, Container, Row, Col, Button } from 'reactstrap';
+import { Card, CardBody, Container, Row, Col } from 'reactstrap';
 import Chart from 'react-google-charts';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 import './Live.scss';
-import { Link } from 'react-router-dom';
+
 import NumberFormat from 'react-number-format';
+import GlobalDailyData from './GlobalDailyData';
 
 class Total extends Component {
   state = {
@@ -17,7 +18,7 @@ class Total extends Component {
   getAll = async () => {
     this.setState({ loading: true });
 
-    const res = await axios.get('https://corona.lmao.ninja/all');
+    const res = await axios.get('https://corona.lmao.ninja/v2/all');
 
     this.setState({ all: res.data, loading: false });
   };
@@ -40,39 +41,42 @@ class Total extends Component {
 
   render() {
     return (
-      <div
-        className='position-fixed'
-        style={{ marginTop: '70px', width: '25%' }}
-      >
-        <Container className='text-center'>
-          <Row>
-            <Col xs='3'>
-              <div
-                className='livenow float-left'
+      <div style={{ marginTop: '70px' }}>
+        <div
+          className='livenow '
+          style={{
+            marginLeft: '-40px',
+            marginTop: '-8px',
+            backgroundColor: 'F00000',
+          }}
+        >
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <h5 style={{ marginLeft: '20px', marginTop: '-4px' }}>LIVE</h5>
+        </div>
+
+        <div style={{ float: 'right' }}>
+          <h5>
+            <FontAwesomeIcon icon={faGlobe} /> COVID-19 Pandemic
+          </h5>
+        </div>
+        <Container>
+          <Row className='text-center' style={{ marginTop: '5px' }}>
+            <Col sm={6}>
+              <Card
                 style={{
-                  marginLeft: '-40px',
-                  marginTop: '-8px',
-                  backgroundColor: 'F00000',
+                  width: '150px',
+                  height: '90px',
+                  borderColor: '#0060B0',
+                  marginLeft: '-10px',
+                  textAlign: 'center',
                 }}
+                className='shadow-sm'
               >
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-                <h5 style={{ marginLeft: '20px', marginTop: '-4px' }}>LIVE</h5>
-              </div>
-            </Col>
-            <Col xs='9'>
-              <h5>
-                <FontAwesomeIcon icon={faGlobe} /> COVID-19 Pandemic
-              </h5>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs='6'>
-              <Card style={{ height: '40px', marginTop: '10px' }}>
                 <CardBody>
-                  <h5 style={{ marginTop: '-15px' }}>
+                  <h5 style={{ marginTop: '-10px' }}>
                     <NumberFormat
                       value={this.state.all.cases}
                       displayType={'text'}
@@ -81,21 +85,33 @@ class Total extends Component {
                     />
                   </h5>
                 </CardBody>
-                <Button
-                  disabled
-                  style={{ backgroundColor: '#016A87', color: 'white' }}
+
+                <CardBody
+                  style={{
+                    backgroundColor: '#0060B0',
+                    color: 'white',
+                  }}
                 >
-                  <h6>
+                  <h6 style={{ marginTop: '-10px' }}>
                     {' '}
-                    <FontAwesomeIcon icon={faGlobe} /> Confrimed
+                    <FontAwesomeIcon icon={faGlobe} /> Infected
                   </h6>
-                </Button>
+                </CardBody>
               </Card>
             </Col>
-            <Col xs='6'>
-              <Card style={{ height: '40px', marginTop: '10px' }}>
+            <Col sm={6}>
+              <Card
+                style={{
+                  width: '150px',
+                  height: '90px',
+                  borderColor: '#B40000',
+                  marginLeft: '',
+                  textAlign: 'center',
+                }}
+                className='shadow-sm '
+              >
                 <CardBody>
-                  <h5 style={{ marginTop: '-15px' }}>
+                  <h5 style={{ marginTop: '-10px' }}>
                     <NumberFormat
                       value={this.state.all.deaths}
                       displayType={'text'}
@@ -104,23 +120,35 @@ class Total extends Component {
                     />
                   </h5>
                 </CardBody>
-                <Button
-                  disabled
-                  style={{ backgroundColor: '#DF1414', color: 'white' }}
+
+                <CardBody
+                  style={{
+                    backgroundColor: '#B40000',
+                    color: 'white',
+                  }}
                 >
-                  <h6>
+                  <h6 style={{ marginTop: '-10px' }}>
                     {' '}
                     <FontAwesomeIcon icon={faGlobe} /> Deaths
                   </h6>
-                </Button>
+                </CardBody>
               </Card>
             </Col>
           </Row>
-          <Row>
-            <Col xs='6'>
-              <Card style={{ height: '40px', marginTop: '50px' }}>
+          <Row style={{ marginTop: '15px' }}>
+            <Col sm={6}>
+              <Card
+                style={{
+                  width: '150px',
+                  height: '90px',
+                  borderColor: '#248C1B',
+                  marginLeft: '-10px',
+                  textAlign: 'center',
+                }}
+                className='shadow-sm '
+              >
                 <CardBody>
-                  <h5 style={{ marginTop: '-15px' }}>
+                  <h5 style={{ marginTop: '-10px' }}>
                     <NumberFormat
                       value={this.state.all.recovered}
                       displayType={'text'}
@@ -129,21 +157,33 @@ class Total extends Component {
                     />
                   </h5>
                 </CardBody>
-                <Button
-                  disabled
-                  style={{ backgroundColor: '#2D9707', color: 'white' }}
+
+                <CardBody
+                  style={{
+                    backgroundColor: '#248C1B',
+                    color: 'white',
+                  }}
                 >
-                  <h6>
+                  <h6 style={{ marginTop: '-10px' }}>
                     {' '}
                     <FontAwesomeIcon icon={faGlobe} /> Recovered
                   </h6>
-                </Button>
+                </CardBody>
               </Card>
             </Col>
-            <Col xs='6'>
-              <Card style={{ height: '40px', marginTop: '50px' }}>
+            <Col sm={6}>
+              <Card
+                style={{
+                  width: '150px',
+                  height: '90px',
+                  borderColor: 'rgb(255,140,0)',
+                  marginLeft: '',
+                  textAlign: 'center',
+                }}
+                className='shadow-sm '
+              >
                 <CardBody>
-                  <h5 style={{ marginTop: '-15px' }}>
+                  <h5 style={{ marginTop: '-10px' }}>
                     <NumberFormat
                       value={this.state.all.active}
                       displayType={'text'}
@@ -152,59 +192,55 @@ class Total extends Component {
                     />
                   </h5>
                 </CardBody>
-                <Button
-                  disabled
-                  style={{ backgroundColor: '#FFA500', color: 'white' }}
+
+                <CardBody
+                  style={{
+                    backgroundColor: 'rgb(255,140,0)',
+
+                    color: 'white',
+                  }}
                 >
-                  <h6>
+                  <h6 style={{ marginTop: '-10px' }}>
+                    {' '}
                     <FontAwesomeIcon icon={faGlobe} /> Active
                   </h6>
-                </Button>
+                </CardBody>
               </Card>
             </Col>
           </Row>
-          <Row>
-            <Col style={{ height: '300px' }}>
-              <Chart
-                width={'500px'}
-                height={'300px'}
-                style={{ marginLeft: '-40px', marginTop: '45px' }}
-                chartType='PieChart'
-                loader={<div style={{ marginTop: '60px' }}>Loading Chart</div>}
-                data={[
-                  ['Task', 'Hours per Day'],
-                  ['', ''],
-                  ['Deaths', this.state.all.deaths],
-                  ['Active', this.state.all.active],
-                  ['Recovered', this.state.all.recovered],
-                ]}
-                options={{
-                  title: 'Overview in Percentage',
-                }}
-              />
+          <Row style={{ marginTop: '20px' }}>
+            <Col sm={2}></Col>
+            <Col sm={8}>
+              <GlobalDailyData />
             </Col>
-          </Row>
-          <Row>
-            <Col>
-              <div>
-                <hr></hr>
-                <Button
-                  outline
-                  color='info'
-                  size='sm'
-                  onClick={() => {
-                    let win = window.open('');
-                    win.location.replace(
-                      'https://github.com/shahibuzzaman/covid19-tracker-reactJS'
-                    );
-                  }}
-                >
-                  Fork on Github
-                </Button>
-              </div>
-            </Col>
+            <Col sm={2}></Col>
           </Row>
         </Container>
+
+        <Row>
+          <Col className='shadow-sm' style={{ height: '275px' }}>
+            <Chart
+              width={'500px'}
+              height={'300px'}
+              style={{ marginLeft: '-30px' }}
+              chartType='PieChart'
+              loader={<div style={{ marginTop: '60px' }}>Loading Chart</div>}
+              data={[
+                ['Task', 'Hours per Day'],
+                ['', ''],
+                ['Deaths', this.state.all.deaths],
+                ['Active', this.state.all.active],
+                ['Recovered', this.state.all.recovered],
+              ]}
+              options={{
+                title: 'Overview in Percentage',
+              }}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col></Col>
+        </Row>
       </div>
     );
   }

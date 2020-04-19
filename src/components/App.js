@@ -1,15 +1,16 @@
 import React, { Component, Fragment } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Nav from './Nav';
+import NavItem from './Nav';
 import Countries from './Countries';
-import { Container, Row, Col, UncontrolledAlert } from 'reactstrap';
 import axios from 'axios';
 import Total from './Total';
-import SafetyTips from './SafetyTips';
 import About from './About';
 import AboutCorona from './AboutCorona';
 import Prevention from './Prevention';
 import CountryData from './CountryData';
+import MapContainer from './MapContainer';
+import { Tab, Nav, Tabs, Container, Row, Col } from 'react-bootstrap';
+import LocalData from './LocalData';
 
 class App extends Component {
   state = {
@@ -21,7 +22,7 @@ class App extends Component {
   getCountries = async () => {
     this.setState({ loading: true });
 
-    const res = await axios.get('https://corona.lmao.ninja/countries');
+    const res = await axios.get('https://corona.lmao.ninja/v2/countries/');
 
     this.setState({
       countries: res.data.sort((a, b) => b.cases - a.cases),
@@ -35,7 +36,7 @@ class App extends Component {
     this.setState({ loading: true });
 
     const res = await axios.get(
-      `https://corona.lmao.ninja/countries/${country}`
+      `https://corona.lmao.ninja/v2/countries/${country}`
     );
 
     this.setState({ country: res.data, loading: false });
@@ -63,7 +64,7 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Nav />
+          <NavItem />
 
           <Switch>
             <Route
@@ -71,23 +72,73 @@ class App extends Component {
               path='/'
               render={(props) => (
                 <Fragment>
-                  <Container fluid={true}>
+                  <Container fluid>
                     <Row>
-                      <Col xs='3'>
+                      <Col sm={3}>
                         <Total />
                       </Col>
-                      <Col xs='6'>
-                        {/* <div style={{ marginTop: '100px' }}>
-                          <UncontrolledAlert
-                            color='info'
-                            fade={false}
-                            alert={this.state.alert}
-                          >
-                            I am an alert and I can be dismissed without
-                            animating!
-                          </UncontrolledAlert>
-                        </div> */}
+                      <Col sm={9} style={{ marginTop: '70px' }}>
+                        <Tab.Container defaultActiveKey='first'>
+                          <Row>
+                            <Col sm={3}></Col>
+                            <Col sm={6}>
+                              <Nav
+                                fill
+                                variant='pills'
+                                defaultActiveKey='first'
+                              >
+                                <Nav.Item>
+                                  <Nav.Link
+                                    className='btn-info'
+                                    eventKey='first'
+                                  >
+                                    Covid-19 Map
+                                  </Nav.Link>
+                                </Nav.Item>
+                                <Nav.Item
+                                  style={{
+                                    marginLeft: '5px',
+                                  }}
+                                >
+                                  <Nav.Link
+                                    eventKey='second'
+                                    className='btn-info'
+                                  >
+                                    All Countries
+                                  </Nav.Link>
+                                </Nav.Item>
+                              </Nav>
+                            </Col>
+                            <Col sm={3}></Col>
+                          </Row>
 
+                          <Row>
+                            <Col>
+                              <Tab.Content
+                                style={{
+                                  marginLeft: '5px',
+                                  marginRight: '5px',
+                                }}
+                              >
+                                <Tab.Pane eventKey='first'>
+                                  <MapContainer />
+                                </Tab.Pane>
+                                <Tab.Pane eventKey='second'>
+                                  <Row>
+                                    <Col>
+                                      <Countries
+                                        loading={this.state.loading}
+                                        countries={this.state.countries}
+                                      />
+                                    </Col>
+                                  </Row>
+                                </Tab.Pane>
+                              </Tab.Content>
+                            </Col>
+                          </Row>
+                        </Tab.Container>
+                      </Col>
+                      {/* <Col xs='9'>
                         <Container responsive='true'>
                           <Row>
                             <Col className='themed-container'>
@@ -95,15 +146,19 @@ class App extends Component {
                                 loading={this.state.loading}
                                 countries={this.state.countries}
                               />
-                            </Col>
-                          </Row>
-                        </Container>
-                      </Col>
-                      <Col xs='3'>
+                            </Col> */}
+                      {/* </Row>
+                        </Container> */}
+                      {/* </Col> */}
+                      {/* <Col xs='3'>
                         <SafetyTips />
-                      </Col>
+                      </Col> */}
+                    </Row>
+                    <Row>
+                      <Col></Col>
                     </Row>
                   </Container>
+                  <LocalData />
                 </Fragment>
               )}
             />

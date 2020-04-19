@@ -7,7 +7,8 @@ import {
   CardTitle,
   CardHeader,
   Button,
-  CardSubtitle
+  CardSubtitle,
+  Col,
 } from 'reactstrap';
 
 import { Link } from 'react-router-dom';
@@ -17,7 +18,7 @@ class Country extends Component {
   render() {
     return (
       <div style={{}}>
-        <Card>
+        <Card className='shadow'>
           <CardHeader className='text-center'>
             <CardImg
               src={this.props.countries.countryInfo.flag}
@@ -37,7 +38,7 @@ class Country extends Component {
                 value={this.props.countries.cases}
                 displayType={'text'}
                 thousandSeparator={true}
-                renderText={value => <span>{value}</span>}
+                renderText={(value) => <span>{value}</span>}
               />
             </CardSubtitle>
             <CardSubtitle>
@@ -47,7 +48,7 @@ class Country extends Component {
                 value={this.props.countries.deaths}
                 displayType={'text'}
                 thousandSeparator={true}
-                renderText={value => <span>{value}</span>}
+                renderText={(value) => <span>{value}</span>}
               />{' '}
             </CardSubtitle>
             <CardSubtitle>
@@ -56,16 +57,16 @@ class Country extends Component {
                 value={this.props.countries.recovered}
                 displayType={'text'}
                 thousandSeparator={true}
-                renderText={value => <span>{value}</span>}
+                renderText={(value) => <span>{value}</span>}
               />{' '}
             </CardSubtitle>
-            <CardSubtitle>
+            {/* <CardSubtitle>
               <strong>Critical : </strong>
               <NumberFormat
                 value={this.props.countries.critical}
                 displayType={'text'}
                 thousandSeparator={true}
-                renderText={value => <span>{value}</span>}
+                renderText={(value) => <span>{value}</span>}
               />{' '}
             </CardSubtitle>
             <CardSubtitle>
@@ -74,9 +75,9 @@ class Country extends Component {
                 value={this.props.countries.active}
                 displayType={'text'}
                 thousandSeparator={true}
-                renderText={value => <span>{value}</span>}
+                renderText={(value) => <span>{value}</span>}
               />{' '}
-            </CardSubtitle>
+            </CardSubtitle> */}
             <hr />
             <CardSubtitle>
               <strong>Cases Today : </strong>
@@ -84,7 +85,7 @@ class Country extends Component {
                 value={this.props.countries.todayCases}
                 displayType={'text'}
                 thousandSeparator={true}
-                renderText={value => <span>{value}</span>}
+                renderText={(value) => <span>{value}</span>}
               />{' '}
             </CardSubtitle>
             <CardSubtitle>
@@ -93,7 +94,7 @@ class Country extends Component {
                 value={this.props.countries.todayDeaths}
                 displayType={'text'}
                 thousandSeparator={true}
-                renderText={value => <span>{value}</span>}
+                renderText={(value) => <span>{value}</span>}
               />{' '}
             </CardSubtitle>
           </CardBody>
