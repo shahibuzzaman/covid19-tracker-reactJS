@@ -3,7 +3,7 @@
 
 ### `Demo`
 
-In the project directory, you can run:
+![Demo](covidtrackerdemo.gif)
 
 ### `yarn start`
 
