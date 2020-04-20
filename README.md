@@ -1,6 +1,8 @@
 
 ## COVID-19 (Coronavirus) Tracker
 
+### `Demo`
+
 In the project directory, you can run:
 
 ### `yarn start`
