@@ -27,7 +27,7 @@
     "react-number-format": "^4.4.1",
     "react-responsive": "^8.0.3",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.4.1",
+    "react-scripts": "5.0.1",
     "reactstrap": "^8.4.1",
     "swr": "^0.2.0"
   },
